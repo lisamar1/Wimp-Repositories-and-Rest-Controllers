@@ -33,7 +33,7 @@ public class ActorAPIController {
 	}
 
 	@GetMapping("{id}")
-		public Actor getOne(@PathVariable String id) {
+		public Actor getOne(@PathVariable Long id) {
 			return actorRepository.findOne(id);
 	}
 
@@ -51,7 +51,7 @@ public class ActorAPIController {
 	}
 
 	@DeleteMapping("{id}")
-		public Actor delete(@PathVariable String id) {
+		public Actor delete(@PathVariable Long id) {
 			Actor actor = actorRepository.findOne(id);
 			actorRepository.delete(id);
 			return actor;

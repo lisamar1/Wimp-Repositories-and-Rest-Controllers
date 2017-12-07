@@ -7,6 +7,6 @@ import com.lmig.gfc.wimp.models.Actor;
 import com.lmig.gfc.wimp.models.Movie;
 
 @Repository
-public interface MovieRepository extends JpaRepository <Movie, String> {
+public interface MovieRepository extends JpaRepository <Movie, Long> {
 
 }

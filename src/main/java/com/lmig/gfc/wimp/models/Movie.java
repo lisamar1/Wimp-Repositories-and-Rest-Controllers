@@ -12,7 +12,7 @@ import javax.persistence.Id;
 		
 		@Id
 		@GeneratedValue(strategy = GenerationType.AUTO)
-		private String id;
+		private Long id;
 		
 		@Column(length=300, nullable=false)
 		private String title;
@@ -29,11 +29,11 @@ import javax.persistence.Id;
 		public Movie() {
 		}
 
-		public String getId() {
+		public Long getId() {
 			return id;
 		}
 
-		public void setId(String id2) {
+		public void setId(Long id2) {
 			this.id = id2;
 		}
 
