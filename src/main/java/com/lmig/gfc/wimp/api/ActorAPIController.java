@@ -1,5 +1,6 @@
 package com.lmig.gfc.wimp.api;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
@@ -28,33 +29,45 @@ public class ActorAPIController {
 
 	@GetMapping("")
 	public List<Actor> getAll() {
-		return actorRepository.findAll();
+
+		List<Actor> actors = actorRepository.findAll();
+		ArrayList<ActorView> actorViews = new ArrayList<ActorView>();
+		for (Actor actor : actors) {
+			actorViews.add(new ActorView(actor));
+		}
+		return actors;
 
 	}
 
 	@GetMapping("{id}")
-		public Actor getOne(@PathVariable Long id) {
-			return actorRepository.findOne(id);
+	public ActorView getOne(@PathVariable Long id) { // 1 Change the return type to be ActorView-based
+		Actor actor = actorRepository.findOne(id); // 2 Put the actor into a variable
+		ActorView view = new ActorView(actor); // 3 Create an ActorView based on that actor
+		return view; // 4 Return the new instance of ActorView
 	}
 
 	@PostMapping("")
-		@ResponseStatus(code=HttpStatus.CREATED)
-		public Actor create(@RequestBody Actor actor) {
-			return actorRepository.save(actor);
+	@ResponseStatus(code = HttpStatus.CREATED)
+	public ActorView create(@RequestBody Actor actor) {
+		actorRepository.save(actor);
+		ActorView view = new ActorView(actor); // 3 Create an ActorView based on that actor
+		return view;
 	}
 
 	@PutMapping("{id}")
-	public Actor update(@RequestBody Actor actor, @PathVariable Long id) {
+	public ActorView update(@RequestBody Actor actor, @PathVariable Long id) {
 		actor.setId(id);
-		return actorRepository.save(actor);
-
+		actorRepository.save(actor);
+		ActorView view = new ActorView(actor); // 3 Create an ActorView based on that actor
+		return view;
 	}
 
 	@DeleteMapping("{id}")
-		public Actor delete(@PathVariable Long id) {
-			Actor actor = actorRepository.findOne(id);
-			actorRepository.delete(id);
-			return actor;
+	public ActorView delete(@PathVariable Long id) {
+		Actor actor = actorRepository.findOne(id);
+		actorRepository.delete(id);
+		ActorView view = new ActorView(actor);
+		return view;
 
-		}
+	}
 }

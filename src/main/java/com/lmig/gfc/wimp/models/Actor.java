@@ -1,12 +1,17 @@
 package com.lmig.gfc.wimp.models;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Actor {
@@ -14,6 +19,13 @@ public class Actor {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
+
+	@OneToMany(mappedBy = "actor")
+	private List<Award> awards;
+
+	@ManyToMany
+	@JsonIgnore
+	private List<Movie> movies;
 
 	@Column(length = 75, nullable = false)
 	private String firstName;
@@ -28,6 +40,13 @@ public class Actor {
 	private Date birthDate;
 
 	public Actor() {
+	};
+
+	public Actor(String firstName, String lastName, Long activeSinceYear, Date birthDate) {
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.activeSinceYear = activeSinceYear;
+		this.birthDate = birthDate;
 	}
 
 	public Long getId() {
@@ -68,6 +87,22 @@ public class Actor {
 
 	public void setBirthDate(Date birthDate) {
 		this.birthDate = birthDate;
+	}
+	
+	public List<Movie> getMovies() {
+		return movies;
+	}
+
+	public List<Award> getAwards() {
+		return awards;
+	}
+
+	public void setAwards(List<Award> awards) {
+		this.awards = awards;
+	}
+
+	public void setMovies(List<Movie> movies) {
+		this.movies = movies;
 	}
 
 }
